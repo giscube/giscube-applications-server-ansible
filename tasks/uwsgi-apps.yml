@@ -151,7 +151,7 @@
       owner=root
       group=root
       mode=0644
-  when: "group_iscgi"
+  when: "group_iscgi|bool"
   notify:
     - reload nginx
 
