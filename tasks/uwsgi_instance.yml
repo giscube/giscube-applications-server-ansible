@@ -22,7 +22,7 @@
   pip:
       virtualenv_python=python2.7
       virtualenv={{ uwsgi_path }}/venv/
-      name=uwsgi version=2.0.15
+      name=uwsgi version=2.0.18
   environment:
       UWSGI_PROFILE: "{{ uwsgi_path }}/uwsgi_build.ini"
 
@@ -30,7 +30,7 @@
   pip:
       virtualenv_python=python3.4
       virtualenv={{ uwsgi_path }}/venv3/
-      name=uwsgi version=2.0.15
+      name=uwsgi version=2.0.18
   environment:
       UWSGI_PROFILE: "{{ uwsgi_path }}/uwsgi_build.ini"
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
@@ -39,7 +39,7 @@
   pip:
       virtualenv_python=python3.5
       virtualenv={{ uwsgi_path }}/venv3/
-      name=uwsgi version=2.0.15
+      name=uwsgi version=2.0.18
   environment:
       UWSGI_PROFILE: "{{ uwsgi_path }}/uwsgi_build.ini"
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
@@ -48,7 +48,7 @@
   pip:
       virtualenv_python=python3.6
       virtualenv={{ uwsgi_path }}/venv3/
-      name=uwsgi version=2.0.15
+      name=uwsgi version=2.0.18
   environment:
       UWSGI_PROFILE: "{{ uwsgi_path }}/uwsgi_build.ini"
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'zesty'
