@@ -1,0 +1,7 @@
+- name: build python {{ python_version }} plugin for uwsgi
+  command: ./uwsgi --build-plugin "plugins/python {{ plugin_name | default('python' + python_version | replace('.','')) }}"
+  args:
+    chdir: "{{ uwsgi_path }}/src/uwsgi-{{ giscube_uwsgi_version }}/"
+    creates: "{{ uwsgi_path }}/src/uwsgi-{{ giscube_uwsgi_version }}/{{ plugin_name | default('python' + python_version | replace('.','')) }}_plugin.so"
+  environment:
+    PYTHON: python{{ python_version }}

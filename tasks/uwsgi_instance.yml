@@ -1,7 +1,7 @@
 ---
 
 - name: create uwsgi directory
-  file: path={{ uwsgi_path }} state=directory
+  file: path={{ uwsgi_path }}/src state=directory
       owner=root
       group=root
       mode=0755
@@ -17,47 +17,58 @@
   with_items:
       - { name: 'envvars', mode: '0644' }
       - { name: 'uwsgi_build.ini', mode: '0644' }
+      - { name: 'build.sh', mode: '0755' }
 
-- name: install uwsgi for python2
-  pip:
-      virtualenv_python=python2.7
-      virtualenv={{ uwsgi_path }}/venv/
-      name=uwsgi version=2.0.18
-  environment:
-      UWSGI_PROFILE: "{{ uwsgi_path }}/uwsgi_build.ini"
+- name: build uwsgi
+  command: "{{ uwsgi_path }}/build.sh"
+  args:
+    creates: "{{ uwsgi_path }}/src/uwsgi-{{ giscube_uwsgi_version }}/uwsgi"
 
-- name: install uwsgi for python3 Ubuntu Trusty
-  pip:
-      virtualenv_python=python3.4
-      virtualenv={{ uwsgi_path }}/venv3/
-      name=uwsgi version=2.0.18
-  environment:
-      UWSGI_PROFILE: "{{ uwsgi_path }}/uwsgi_build.ini"
+- name: build list of python versions for uwsgi python plugin
+  set_fact:
+    python_versions: "{{ giscube_uwsgi_python_versions }}"
+
+- name: add python 2.7 to build list
+  set_fact:
+    python_versions: "{{ python_versions + [ '2.7' ] }}"
+  when: not giscube_uwsgi_python_versions and ansible_distribution == 'Ubuntu' and (ansible_distribution_release in ['trusty', 'xenial', 'zesty', 'bionic'])
+
+- name: add python 3.4 to build list
+  block:
+  - name: add python 3.4 to build list
+    set_fact:
+      python_versions: "{{ python_versions + [ '3.4' ] }}"
+    when: not giscube_uwsgi_python_versions
+
+  - name: build python 3.4 plugin as default python plugin
+    include: uwsgi-plugin-python.yml python_version=3.4 plugin_name=python
+
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'trusty'
 
-- name: install uwsgi for python3 Ubuntu Xenial
-  pip:
-      virtualenv_python=python3.5
-      virtualenv={{ uwsgi_path }}/venv3/
-      name=uwsgi version=2.0.18
-  environment:
-      UWSGI_PROFILE: "{{ uwsgi_path }}/uwsgi_build.ini"
+- name: add python 3.5 to build list
+  block:
+  - name: add python 3.5 to build list
+    set_fact:
+      python_versions: "{{ python_versions + [ '3.5' ] }}"
+    when: not giscube_uwsgi_python_versions
+
+  - name: build python 3.5 plugin as default python plugin
+    include: uwsgi-plugin-python.yml python_version=3.5 plugin_name=python
+
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'xenial'
 
-- name: install uwsgi for python3 Ubuntu Zesty
-  pip:
-      virtualenv_python=python3.6
-      virtualenv={{ uwsgi_path }}/venv3/
-      name=uwsgi version=2.0.18
-  environment:
-      UWSGI_PROFILE: "{{ uwsgi_path }}/uwsgi_build.ini"
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'zesty'
+- name: add python 3.6 to build list
+  block:
+  - name: add python 3.6 to build list
+    set_fact:
+      python_versions: "{{ python_versions + [ '3.6' ] }}"
+    when: not giscube_uwsgi_python_versions
 
-- name: install uwsgi for python3 Ubuntu Bionic
-  pip:
-      virtualenv_python=python3.6
-      virtualenv={{ uwsgi_path }}/venv3/
-      name=uwsgi version=2.0.17
-  environment:
-      UWSGI_PROFILE: "{{ uwsgi_path }}/uwsgi_build.ini"
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == 'bionic'
+  - name: build python 3.6 plugin as default python plugin
+    include: uwsgi-plugin-python.yml python_version=3.6 plugin_name=python
+
+  when: ansible_distribution == 'Ubuntu' and (ansible_distribution_release in ['zesty', 'bionic'])
+
+- name: build python {{ item }} plugin for uwsgi
+  include: uwsgi-plugin-python.yml python_version={{ item }}
+  with_items: "{{ python_versions }}"
