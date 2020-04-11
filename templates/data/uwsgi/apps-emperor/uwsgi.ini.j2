@@ -5,3 +5,7 @@ emperor = {{ emperor_path | default(group_path) }}/*/uwsgi{{ python_suffix }}.in
 master = true
 die-on-term = true
 vacuum = true
+touch-reload = %d/uwsgi.ini
+
+vassals-include-before = %d/vassals-before.ini
+vassals-include = %d/vassals-after.ini

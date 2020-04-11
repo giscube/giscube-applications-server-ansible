@@ -32,6 +32,8 @@
   with_items:
       - { name: 'envvars', mode: '0644' }
       - { name: 'uwsgi.ini', mode: '0644' }
+      - { name: 'vassals-before.ini', mode: '0644' }
+      - { name: 'vassals-after.ini', mode: '0644' }
       - { name: 'uwsgi.sh', mode: '0755' }
 
 - name: copy uwsgi3 emperor application server to uwsgi directory
@@ -47,6 +49,8 @@
   with_items:
       - { name: 'envvars', mode: '0644' }
       - { name: 'uwsgi.ini', mode: '0644' }
+      - { name: 'vassals-before.ini', mode: '0644' }
+      - { name: 'vassals-after.ini', mode: '0644' }
       - { name: 'uwsgi.sh', mode: '0755' }
   when: "not group_iscgi"
 
@@ -78,6 +82,8 @@
   with_items:
       - { name: 'envvars', mode: '0644' }
       - { name: 'uwsgi.ini', mode: '0644' }
+      - { name: 'vassals-before.ini', mode: '0644' }
+      - { name: 'vassals-after.ini', mode: '0644' }
       - { name: 'uwsgi.sh', mode: '0755' }
       - { name: 'uwsgi_socket_name.sh', mode: '0755' }
 
@@ -94,6 +100,8 @@
   with_items:
       - { name: 'envvars', mode: '0644' }
       - { name: 'uwsgi.ini', mode: '0644' }
+      - { name: 'vassals-before.ini', mode: '0644' }
+      - { name: 'vassals-after.ini', mode: '0644' }
       - { name: 'uwsgi.sh', mode: '0755' }
       - { name: 'uwsgi_socket_name.sh', mode: '0755' }
   when: "not group_iscgi"

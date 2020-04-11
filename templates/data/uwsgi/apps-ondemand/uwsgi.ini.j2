@@ -5,5 +5,9 @@ emperor = {{ emperor_path | default(group_path) }}/*/uwsgi_ondemand{{ python_suf
 master = true
 die-on-term = true
 vacuum = true
+touch-reload = %d/uwsgi.ini
 
 emperor-on-demand-exec=%d/uwsgi_socket_name.sh
+
+vassals-include-before = %d/vassals-before.ini
+vassals-include = %d/vassals-after.ini

@@ -1,0 +1,10 @@
+#! /bin/sh
+
+UWSGI_VERSION={{ giscube_uwsgi_version }}
+cd "{{ uwsgi_path }}/src"
+wget https://github.com/unbit/uwsgi/archive/$UWSGI_VERSION.tar.gz
+tar xvzf $UWSGI_VERSION.tar.gz
+cd uwsgi-$UWSGI_VERSION
+make PROFILE={{ uwsgi_path }}/uwsgi_build.ini
+cd ..
+rm $UWSGI_VERSION.tar.gz

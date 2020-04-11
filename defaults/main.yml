@@ -11,5 +11,8 @@ giscube_appsservers:
   - { name: "{{ giscube_fcgis_name }}", path: "{{ giscube_fcgis_path }}", cgi: true, local: true }
 
 giscube_uwsgi_directory: /data/uwsgi
+giscube_uwsgi_version: 2.0.18
+giscube_uwsgi_python_versions: []
+giscube_uwsgi_vassal_plugin: python
 
 giscube_appsserver_install_examples: yes
