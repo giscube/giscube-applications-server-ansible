@@ -71,4 +71,4 @@
 
 - name: build python {{ item }} plugin for uwsgi
   include: uwsgi-plugin-python.yml python_version={{ item }}
-  with_items: "{{ python_versions }}"
+  with_items: "{{ python_versions | default([]) }}"
