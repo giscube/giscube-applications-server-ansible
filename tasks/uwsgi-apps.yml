@@ -146,7 +146,7 @@
       dest=/etc/nginx/sites-available/default.conf/appsserver-{{ group_name }}.conf
       owner=root
       group=root
-      mode=0644
+      mode=0640
   when: "not group_iscgi"
   notify:
     - reload nginx
@@ -158,7 +158,7 @@
       dest=/etc/nginx/sites-available/default.conf/appsserver-{{ group_name }}.conf
       owner=root
       group=root
-      mode=0644
+      mode=0640
   when: "group_iscgi|bool"
   notify:
     - reload nginx
