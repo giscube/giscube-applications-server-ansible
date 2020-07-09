@@ -4,7 +4,7 @@
   file: path={{ uwsgi_path }}/src state=directory
       owner=root
       group=root
-      mode=0755
+      mode=0750
 
 - name: copy uwsgi config files
   template:
@@ -15,9 +15,9 @@
       group=root
       mode={{ item.mode }}
   with_items:
-      - { name: 'envvars', mode: '0644' }
-      - { name: 'uwsgi_build.ini', mode: '0644' }
-      - { name: 'build.sh', mode: '0755' }
+      - { name: 'envvars', mode: '0640' }
+      - { name: 'uwsgi_build.ini', mode: '0640' }
+      - { name: 'build.sh', mode: '0750' }
 
 - name: build uwsgi
   command: "{{ uwsgi_path }}/build.sh"

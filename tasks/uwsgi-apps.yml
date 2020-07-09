@@ -10,13 +10,13 @@
   file: path={{ uwsgi_instance }}/{{ group_name }}-emperor state=directory
       owner=root
       group=root
-      mode=0755
+      mode=0750
 
 - name: create uwsgi3 emperor application server directory
   file: path={{ uwsgi_instance }}/{{ group_name }}-emperor3 state=directory
       owner=root
       group=root
-      mode=0755
+      mode=0750
   when: "not group_iscgi"
 
 - name: copy uwsgi emperor application server to uwsgi directory
@@ -30,11 +30,11 @@
         group=root
         mode={{ item.mode }}
   with_items:
-      - { name: 'envvars', mode: '0644' }
-      - { name: 'uwsgi.ini', mode: '0644' }
-      - { name: 'vassals-before.ini', mode: '0644' }
-      - { name: 'vassals-after.ini', mode: '0644' }
-      - { name: 'uwsgi.sh', mode: '0755' }
+      - { name: 'envvars', mode: '0640' }
+      - { name: 'uwsgi.ini', mode: '0640' }
+      - { name: 'vassals-before.ini', mode: '0640' }
+      - { name: 'vassals-after.ini', mode: '0640' }
+      - { name: 'uwsgi.sh', mode: '0750' }
 
 - name: copy uwsgi3 emperor application server to uwsgi directory
   vars:
@@ -47,11 +47,11 @@
         group=root
         mode={{ item.mode }}
   with_items:
-      - { name: 'envvars', mode: '0644' }
-      - { name: 'uwsgi.ini', mode: '0644' }
-      - { name: 'vassals-before.ini', mode: '0644' }
-      - { name: 'vassals-after.ini', mode: '0644' }
-      - { name: 'uwsgi.sh', mode: '0755' }
+      - { name: 'envvars', mode: '0640' }
+      - { name: 'uwsgi.ini', mode: '0640' }
+      - { name: 'vassals-before.ini', mode: '0640' }
+      - { name: 'vassals-after.ini', mode: '0640' }
+      - { name: 'uwsgi.sh', mode: '0750' }
   when: "not group_iscgi"
 
 # e.g. /data/uwsgi/apps-ondemand
@@ -59,14 +59,14 @@
   file: path={{ uwsgi_instance }}/{{ group_name }}-ondemand state=directory
       owner=root
       group=root
-      mode=0755
+      mode=0750
 
 # e.g. /data/uwsgi/apps-ondemand3
 - name: create uwsgi ondemand application server directory
   file: path={{ uwsgi_instance }}/{{ group_name }}-ondemand3 state=directory
       owner=root
       group=root
-      mode=0755
+      mode=0750
   when: "not group_iscgi"
 
 - name: copy uwsgi ondemand application server to uwsgi directory
@@ -80,12 +80,12 @@
       group=root
       mode={{ item.mode }}
   with_items:
-      - { name: 'envvars', mode: '0644' }
-      - { name: 'uwsgi.ini', mode: '0644' }
-      - { name: 'vassals-before.ini', mode: '0644' }
-      - { name: 'vassals-after.ini', mode: '0644' }
-      - { name: 'uwsgi.sh', mode: '0755' }
-      - { name: 'uwsgi_socket_name.sh', mode: '0755' }
+      - { name: 'envvars', mode: '0640' }
+      - { name: 'uwsgi.ini', mode: '0640' }
+      - { name: 'vassals-before.ini', mode: '0640' }
+      - { name: 'vassals-after.ini', mode: '0640' }
+      - { name: 'uwsgi.sh', mode: '0750' }
+      - { name: 'uwsgi_socket_name.sh', mode: '0750' }
 
 - name: copy uwsgi3 ondemand application server to uwsgi directory
   vars:
@@ -98,12 +98,12 @@
       group=root
       mode={{ item.mode }}
   with_items:
-      - { name: 'envvars', mode: '0644' }
-      - { name: 'uwsgi.ini', mode: '0644' }
-      - { name: 'vassals-before.ini', mode: '0644' }
-      - { name: 'vassals-after.ini', mode: '0644' }
-      - { name: 'uwsgi.sh', mode: '0755' }
-      - { name: 'uwsgi_socket_name.sh', mode: '0755' }
+      - { name: 'envvars', mode: '0640' }
+      - { name: 'uwsgi.ini', mode: '0640' }
+      - { name: 'vassals-before.ini', mode: '0640' }
+      - { name: 'vassals-after.ini', mode: '0640' }
+      - { name: 'uwsgi.sh', mode: '0750' }
+      - { name: 'uwsgi_socket_name.sh', mode: '0750' }
   when: "not group_iscgi"
 
 # supervisor configuration
@@ -114,7 +114,7 @@
       dest=/etc/supervisor/conf.d/{{ group_name }}-{{ item }}
       owner=root
       group=root
-      mode=0644
+      mode=0640
   with_items:
     - apps-emperor.conf
     - apps-ondemand.conf
@@ -129,7 +129,7 @@
       dest=/etc/supervisor/conf.d/{{ group_name }}-{{ item }}
       owner=root
       group=root
-      mode=0644
+      mode=0640
   when: "not group_iscgi"
   with_items:
     - apps-emperor3.conf
@@ -176,5 +176,5 @@
       dest={{ group_path }}
       owner=root
       group=root
-      mode=0644
+      mode=0640
   when: "giscube_appsserver_install_examples and not group_iscgi"
