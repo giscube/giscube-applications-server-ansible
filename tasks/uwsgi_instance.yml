@@ -40,6 +40,9 @@
       python_versions: "{{ python_versions + [ '3.4' ] }}"
     when: not giscube_uwsgi_python_versions
 
+  - name: build python 3.4 plugin as default python3 plugin
+    include: uwsgi-plugin-python.yml python_version=3.4 plugin_name=python3
+
   - name: build python 3.4 plugin as default python plugin
     include: uwsgi-plugin-python.yml python_version=3.4 plugin_name=python
 
@@ -51,6 +54,9 @@
     set_fact:
       python_versions: "{{ python_versions + [ '3.5' ] }}"
     when: not giscube_uwsgi_python_versions
+
+  - name: build python 3.5 plugin as default python3 plugin
+    include: uwsgi-plugin-python.yml python_version=3.5 plugin_name=python3
 
   - name: build python 3.5 plugin as default python plugin
     include: uwsgi-plugin-python.yml python_version=3.5 plugin_name=python
@@ -64,10 +70,28 @@
       python_versions: "{{ python_versions + [ '3.6' ] }}"
     when: not giscube_uwsgi_python_versions
 
+  - name: build python 3.6 plugin as default python3 plugin
+    include: uwsgi-plugin-python.yml python_version=3.6 plugin_name=python3
+
   - name: build python 3.6 plugin as default python plugin
     include: uwsgi-plugin-python.yml python_version=3.6 plugin_name=python
 
   when: ansible_distribution == 'Ubuntu' and (ansible_distribution_release in ['zesty', 'bionic'])
+
+- name: add python 3.8 to build list
+  block:
+  - name: add python 3.8 to build list
+    set_fact:
+      python_versions: "{{ python_versions + [ '3.8' ] }}"
+    when: not giscube_uwsgi_python_versions
+
+  - name: build python 3.8 plugin as default python3 plugin
+    include: uwsgi-plugin-python.yml python_version=3.8 plugin_name=python3
+
+  - name: build python 3.8 plugin as default python plugin
+    include: uwsgi-plugin-python.yml python_version=3.8 plugin_name=python
+
+  when: ansible_distribution == 'Ubuntu' and (ansible_distribution_release in ['focal'])
 
 - name: build python {{ item }} plugin for uwsgi
   include: uwsgi-plugin-python.yml python_version={{ item }}
