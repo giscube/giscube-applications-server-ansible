@@ -1,6 +1,7 @@
 [uwsgi]
 procname-prefix-spaced=/{{ group_name }}/* emperor
 
+emperor = {{ emperor_path | default(group_path) }}/*/uwsgi.ini
 emperor = {{ emperor_path | default(group_path) }}/*/uwsgi?.ini
 master = true
 die-on-term = true
