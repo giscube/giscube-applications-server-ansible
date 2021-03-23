@@ -1,13 +1,13 @@
 
-    rewrite ^/{{ group_name }}/([^/]+)$ $scheme://$http_host/{{ group_name }}/$1/ redirect ;
+    rewrite ^/{{ group_url }}/([^/]+)$ $scheme://$http_host/{{ group_url }}/$1/ redirect ;
 
     ### {{ group_name }}
     # Static files
-    location ~ ^/(?<group>{{ group_name }})/(?<appname>[^/]+)/static/(?<resource>.*)$ {
+    location ~ ^/(?<group>{{ group_url }})/(?<appname>[^/]+)/static/(?<resource>.*)$ {
             alias {{ group_path }}/$appname/static/$resource;
     }
 
-    location ~ ^/(?<group>{{ group_name }})/(?<appname>[^/]+)/(.*) {
+    location ~ ^/(?<group>{{ group_url }})/(?<appname>[^/]+)/(.*) {
             include uwsgi_params;
             uwsgi_pass unix:{{ group_path }}/$appname/uwsgi.sock;
     }

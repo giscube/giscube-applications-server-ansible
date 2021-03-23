@@ -68,12 +68,12 @@
 # nginx configuration
 - name: applications server nginx configuration
   template:
-      backup=yes
-      src=etc/nginx/sites-available/default.conf/{{ app_server_nginx_template | default('applications-server.conf') }}.j2
-      dest=/etc/nginx/sites-available/default.conf/appsserver-{{ group_name }}.conf
-      owner=root
-      group=root
-      mode=0640
+    backup: yes
+    src: etc/nginx/sites-available/default.conf/{{ app_server_nginx_template | default('applications-server.conf') }}.j2
+    dest: /etc/nginx/sites-available/{{ group_nginx_vhost_confdir }}/appsserver-{{ group_name }}.conf
+    owner: root
+    group: root
+    mode: 0640
   when: "not group_iscgi"
   notify:
     - reload nginx
