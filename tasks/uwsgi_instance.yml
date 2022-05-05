@@ -28,11 +28,6 @@
   set_fact:
     python_versions: "{{ giscube_uwsgi_python_versions }}"
 
-- name: add python 2.7 to build list
-  set_fact:
-    python_versions: "{{ python_versions + [ '2.7' ] }}"
-  when: not giscube_uwsgi_python_versions and ansible_distribution == 'Ubuntu' and (ansible_distribution_release in ['trusty', 'xenial', 'zesty', 'bionic'])
-
 - name: add python 3.4 to build list
   block:
   - name: add python 3.4 to build list
