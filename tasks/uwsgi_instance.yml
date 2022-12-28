@@ -88,6 +88,21 @@
 
   when: ansible_distribution == 'Ubuntu' and (ansible_distribution_release in ['focal'])
 
+- name: add python 3.10 to build list
+  block:
+  - name: add python 3.10 to build list
+    set_fact:
+      python_versions: "{{ python_versions + [ '3.10' ] }}"
+    when: not giscube_uwsgi_python_versions
+
+  - name: build python 3.10 plugin as default python3 plugin
+    include: uwsgi-plugin-python.yml python_version=3.10 plugin_name=python3
+
+  - name: build python 3.10 plugin as default python plugin
+    include: uwsgi-plugin-python.yml python_version=3.10 plugin_name=python
+
+  when: ansible_distribution == 'Ubuntu' and (ansible_distribution_release in ['jammy'])
+
 - name: build python {{ item }} plugin for uwsgi
   include: uwsgi-plugin-python.yml python_version={{ item }}
   with_items: "{{ python_versions | default([]) }}"
