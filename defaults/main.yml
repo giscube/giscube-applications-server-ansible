@@ -15,7 +15,7 @@ giscube_appsservers:
     local: true
 
 giscube_uwsgi_directory: /data/uwsgi
-giscube_uwsgi_version: 2.0.19.1
+giscube_uwsgi_version: 2.0.21
 giscube_uwsgi_python_versions: []
 giscube_uwsgi_vassal_plugin: python
 
